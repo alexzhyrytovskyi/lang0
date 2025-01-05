@@ -1,0 +1,242 @@
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`  LANG0 Grammar
+`  Author: Alex Zhyrytovskyi, created: 2023-04-06     released: 2025-01-05   lastmod: 2025-01-05
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<blanks> ::=
+    [ " " | "\t" | "\n" | <comment1> | <comment2> ]*
+<comment1> ::=
+    "`" [ <any-symbol> ]* "\n"
+<comment2> ::=
+    "<<<" [ <any-symbol> ]* ">>>"
+<program> ::=
+    [ <statement> ]*
+<block> ::=
+    "{" [ <statement> ]* "}"
+<statement> ::=
+    "@" <label>
+    <block>
+    <if>
+    <repeat>
+    <while>
+    <for>
+    <break>
+    <continue>
+    <return>
+    <goto>
+    <try>
+    <throw>
+    <print>
+    <assert>
+    <randomize>
+    <function-declaration>
+    <function-call>
+    <assignment>
+<if> ::=
+    "if" "(" <expression> ")" <statement> [ "else" <statement> ]
+<repeat> ::=
+    "repeat" <statement>
+<while> ::=
+    "while" "(" <expression> ")" <statement>
+<for> ::=
+    "for" "(" <statement> "," <expression> "," <statement> ")" <statement>
+<break> ::=
+    "break"
+<continue> ::=
+    "continue"
+<return> ::=
+    "return"
+    "return" ":" <expression>
+<goto> ::=
+    "goto" "@" <label>
+<try> ::=
+    "try" <block> [ "catch" <block> ]
+<throw> :=
+    "throw"
+<randomize> ::=
+    "randomize" "(" ")"
+    "randomize" "(" <expression> ")"
+<assert> ::=
+    "assert" "(" <expression> ")"
+<print> ::=
+    "print" "(" ")"
+    "print" "(" "expression" [ "," <expression> ]* ")"
+<assignment> ::=
+    <selector> "=" <expression>
+    <selector> "++"
+    <selector> "--"
+    <selector> "+=" <expression>
+    <selector> "-=" <expression>
+    <selector> "*=" <expression>
+    <selector> "/=" <expression>
+    <selector> "\=" <expression>
+    <selector> "%=" <expression>
+    <selector> "&=" <expression>
+    <selector> "|=" <expression>
+    <selector> "^=" <expression>
+    <selector> "<<=" <expression>
+    <selector> ">>=" <expression>
+<expression> ::=
+    <relation>
+    <relation> "|" <expression>
+    <relation> "&" <expression>
+<relation> ::=
+    <formula>
+    <formula> "=" <relation>
+    <formula> "!=" <relation>
+    <formula> ">" <relation>
+    <formula> ">=" <relation>
+    <formula> "<" <relation>
+    <formula> "<=" <relation>
+<formula> ::=
+    <term>
+    <term> "+" <formula>
+    <term> "-" <formula>
+<term> ::=
+    <factor>
+    <factor> "*" <term>
+    <factor> "/" <term>
+    <factor> "\" <term>
+    <factor> "%" <term>
+    <factor> "<<" <term>
+    <factor> ">>" <term>
+    <factor> "^" <term>
+<factor> ::=
+    <item>
+    "+" <factor>
+    "-" <factor>
+    "!" <factor>
+<item> ::=
+    <number>
+    <hex-number>
+    <string>
+    <character>
+    <function-call>
+    <selector>
+    <built-in-name>
+    <array>
+    <array-of>
+    "(" <expression> ")"
+<function-call> ::=
+    <selector> "(" ")"
+    <selector> "(" <expression> [ "," <expression> ]* ")"
+<selector> ::=
+    ["$"] <name> [ "." <method> | "[" <expression> "]" ]*
+<built-in-name> ::=
+    <true> | <false> | <pi> | <infinity> | <Nan> | <inline-if> | <random> | <min> | <max> | <abs> | <sqrt> |
+    <sin> | <cos> | <tan> | <asin> | <acos> | <atan> | <sinh> | <cosh> | <tanh> | <asinh> | <acosh> | <atanh> |
+    <pow> | <exp> | <log> | <hypot> | <trunc> | <round> | <ceil> | <floor> | <isNan> | <ord> | <chr>
+<true> ::=
+    "true"
+<false> ::=
+    "false"
+<pi> :=
+    "pi"
+<infinity> ::=
+    "infinity"
+<Nan> ::=
+    "Nan"
+<inline-if> ::=
+    "if" "(" <expression> "," <expression> "," <expression> ")"
+<random> ::=
+    "random" "(" ")"
+    "random" "(" <expression> ")"
+    "random" "(" <expression> "," <expression> ")"
+<min> ::=
+     "(" <expression> [ "," <expression> ]* ")"
+<max> ::=
+     "(" <expression> [ "," <expression> ]* ")"
+<abs> ::=
+    "abs" "(" <expression> ")"
+<sqrt> ::=
+    "sqrt" "(" <expression> ")"
+<sin> ::=
+    "sin" "(" <expression> ")"
+<cos> ::=
+    "cos" "(" <expression> ")"
+<tan> ::=
+    "tan" "(" <expression> ")"
+<asin> ::=
+    "asin" "(" <expression> ")"
+<acos> ::=
+    "acos" "(" <expression> ")"
+<atan> ::=
+    "atan" "(" <expression> ")"
+    "atan" "(" <expression> "," <expression> ")"
+<sinh> ::=
+    "sinh" "(" <expression> ")"
+<cosh> ::=
+    "cosh" "(" <expression> ")"
+<tanh> ::=
+    "tanh" "(" <expression> ")"
+<asinh> ::=
+    "asinh" "(" <expression> ")"
+<acosh> ::=
+    "acosh" "(" <expression> ")"
+<atanh> ::=
+    "atanh" "(" <expression> ")"
+<pow> ::=
+    "pow" "(" <expression> ")"
+    "pow" "(" <expression> "," <expression> ")"
+<exp> ::=
+    "exp" "(" <expression> ")"
+<log> ::=
+    "log" "(" <expression> ")"
+    "log" "(" <expression> "," <expression> ")"
+<hypot> ::=
+    "hypot" "(" <expression> "," <expression> ")"
+<trunc> ::=
+    "trunc" "(" <expression> ")"
+<round> ::=
+    "round" "(" <expression> ")"
+<ceil> ::=
+    "ceil" "(" <expression> ")"
+<floor> ::=
+    "floor" "(" <expression> ")"
+<isNan> ::=
+    "isNan" "(" <expression> ")"
+<ord> ::=
+    "ord" "(" <expression> ")"
+<chr> ::=
+    "chr" "(" <expression> ")"
+<method> ::=
+    <name>
+    <string-method>
+    <array-method>
+<string-method>
+    "length"
+    "copy" "(" <expression> "," <expression> ")"
+    "toUpperCase" "(" ")"
+    "toLowerCase" "("  ")"
+    "indexOf" "(" <expression> ")"
+<array-method> ::=
+    "length"
+    "copy" "(" <expression> "," <expression> ")"
+<array> ::=
+    "[" "]"
+    "[" <expression> [ "," <expression> ]* "]"
+<array-of> ::=
+    "array" "(" <expression> ")" "of" [ "bool" | "byte" | "sbyte" | "int16" | "uint16" | "int32" | "int" | "uint" | "char" | "string" ]
+<number> ::=
+    "0..9"+ [ "."  "0..9"+ ]
+<hex-number> ::=
+    "#" [ "0..9" | "a..f" | "A..F" ]+
+<string> ::=
+    '"' <string-contents> '"'
+<string-contents> ::=
+    [ '""' | '{{' | '}}' | '{' <expression> '}' | <any-symbol> ]*
+<character> ::=
+    "'" <any-symbol> "'"
+<name> ::=
+    [ "a..z" | "A..Z" | "_" ]+ [ "a..z" | "A..Z" | "_" | "0..9" ]*
+<label> ::=
+    <name>
+<any-symbol> ::=
+    ?
+<function-declaration> ::=
+    "function" <name> <function-body>
+<function-body>
+    "(" [ <parameter-list> ] ")" [ ":" <type> ] <block>
+<parameter-list> ::=
+    <name> ":" <type> [ "," <parameter-list> ]
+<type> ::=
+    "int" | "float" | "bool" | "char" | "string"
