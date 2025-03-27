@@ -1,0 +1,47 @@
+initGraph(200, 150)
+
+t = 0.0
+wave_x = array(3) of int
+wave_y = array(3) of int
+wave_w = array(3) of float
+wave_k = array(3) of float
+
+randomize()
+for (i = 0, i < 3, i++) {
+	wave_x[i] = random(200)
+	wave_y[i] = random(150)
+	wave_w[i] = random() * 100
+	wave_k[i] = random()
+}
+
+repeat {
+	clearGraph()
+	
+	for (x = 0, x < 200, x++)
+	for (y = 0, y < 150, y++) {
+		h = 0
+		for (i = 0, i < 3, i++) {
+			dx = x - wave_x[i]
+			dy = y - wave_y[i]
+			h += sin(wave_w[i] * t - wave_k[i] * sqrt(pow(dx) + pow(dy)))
+		}
+		v = keepByte(floor(h * 100.0 + 50.0))
+		c = colorMix(#000000, #00ffaa, v, 255)
+		putPixel(x, y, c)
+	}
+	
+	repaintGraph()
+	delay(20)
+	t += 0.01
+}
+closeGraph()
+
+function keepByte(value: int): int {
+	if (value < 0)
+		return: 0
+	
+	if (value > 255)
+		return: 255
+	
+	return: value
+}

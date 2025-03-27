@@ -1,0 +1,5 @@
+Copyright (c) 2017 - 2025, Author: Alex Zhyrytovskyi (legal name: Oleksandr Zhyrytovskyi) [i.am.zhirik@gmail.com]
+This software is published for demo purpose only. It is not for commercial or production use unless otherwise licensed. To obtain a full license for production use, please contact author of this software.
+
+Copyright (c) 2017 - 2025, Автор: Олександр Жиритовський [i.am.zhirik@gmail.com]
+Дане програмне зебезпечечення опубліковано лише в демонстраційних цілях. Воно не призначено для звичайного та комерційного використання якщо не є ліцензованим. Для отримання повної ліцензії зв'яжіться з автором даного програмного забезпечення.

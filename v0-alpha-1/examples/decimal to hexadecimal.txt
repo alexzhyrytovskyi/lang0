@@ -1,0 +1,25 @@
+`=========================================================================================================
+`  Conversion of decimal numbers into hexadecimal
+`=========================================================================================================
+
+print("Conversion of decimal numbers into hexadecimal")
+randomize()
+for (i = 0, i < 10, i++) {
+	n = random(1, 10000)
+	printRes(n)
+}
+
+function printRes(number: int) {
+	hex = int2hex(number)
+	print("{number} -> #{hex}")
+}
+
+function int2hex(number: int): string {
+	hexes = "0123456789abcdef"
+	s = ""
+	while (number > 0) {
+		s = hexes[number & 15] + s
+		number \= 16
+	}
+	return: s
+}

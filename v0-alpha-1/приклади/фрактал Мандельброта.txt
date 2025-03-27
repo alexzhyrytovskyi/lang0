@@ -1,0 +1,60 @@
+initGraph(640, 480)
+
+palette = array(80) of int
+colors = array(7) of int
+
+colors[0] = #000000
+colors[1] = #9988FF
+colors[2] = #FFFFFF
+colors[3] = #550000
+colors[4] = #FF55EE
+colors[5] = #FFFF00
+colors[6] = #FFFFFF
+
+fragmentSize = floor(palette.length / (colors.length - 1))
+fragmentIndex = 0
+fragmentPos = 0
+for (p = 0, p < 80, p++) {
+	c = colorMix(colors[fragmentIndex], colors[fragmentIndex + 1], fragmentPos, fragmentSize)
+	palette[p] = c
+	fragmentPos++
+	if (fragmentPos > fragmentSize) {
+		fragmentPos = 0
+		fragmentIndex++
+	}
+}
+
+x1 = -2.0
+y1 = -2.0
+x2 = 2.0
+y2 = 2.0
+kx = (x2 - x1) / 480
+ky = (y2 - y1) / 480
+for (x = 0, x < 640, x++)
+for (y = 0, y < 480, y++) {
+	i = x1 + x * kx
+	j = y1 + y * ky
+	n = mandelbrot(i, j)
+	c = palette[n]
+	putPixel(x, y, c)
+}
+
+function mandelbrot(x: float, y: float): int {
+	x0 = x
+	y0 = y
+	n = 0
+	while (x*x + y*y < 4 & n < 80) {
+		xt = x*x - y*y + x0
+		yt = 2*x*y + y0
+		x = xt
+		y = yt
+		n++
+	}
+	return: n
+}
+
+for (i = 0, i < 2000, i++) {
+	repaintGraph()
+	delay(20)
+}
+closeGraph()
