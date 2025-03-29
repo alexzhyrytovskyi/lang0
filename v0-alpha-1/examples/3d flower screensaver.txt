@@ -1,0 +1,63 @@
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`  3D Flower Screensaver
+`  Author: Alex Zhyrytovskyi    created: 2018    lastmod: 2025-03-29
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+perspective = 1000 ` Value of perspecive
+centerX = 400      ` Screen center X
+centerY = 300      ` Screen center Y
+cosA = 0           ` Precalculated values for sine and cosine
+sinA = 0           ` Precalculated values for sine and cosine
+cosB = 0           ` Precalculated values for sine and cosine
+sinB = 0           ` Precalculated values for sine and cosine
+radius = 200       ` Radious of the flower
+magic1 = 5         ` Magic numbers which set the count of petals
+magic2 = 3         ` Magic numbers which set the count of petals
+alpha = 0          ` Initial "alpha" angle
+beta = 0           ` Initial "beta" angle
+
+initGraph(800, 600) ` Initializing graphics
+repeat {
+	clearGraph()        ` Clear screen
+	rotate(alpha, beta) ` Rotate axis by specified angles
+	
+	` Draw 3-dimensional flower
+	angle = 0
+	while (angle < 2 * pi) {
+		x = radius * cos(magic1 * angle) * cos(magic2 * angle)
+		y = radius * sin(magic2 * angle) * cos(magic1 * angle)
+		z = radius * random() / 10
+		putPixel3D(x, y, z)
+		angle += 0.0005
+	}
+	
+	repaintGraph() ` Draw picture on the screen
+	delay(20)      ` Wait 20 millisecons
+	alpha += 0.01  ` Increase "alpha" angle by some increment
+	beta += 0.005  ` Increase "beta" angle by some increment
+}
+
+` Function for rotrating axis by "alpha" and "beta" angles
+function rotate(alpha: float, beta: float) {
+	$sinA = sin(alpha)
+	$cosA = cos(alpha)
+	$sinB = sin(beta)
+	$cosB = cos(beta)
+}
+
+` Function that draw a pointr in 3-dimentional space
+function putPixel3D(x: float, y: float, z: float) {
+	` 3-dimensional axis rotation
+	xr  = x * $cosA - y * $sinA
+	tmp = x * $sinA + y * $cosA
+	yr  = tmp * $cosB - z * $sinB
+	zr  = tmp * $sinB + z * $cosB
+
+	` Projection with perspecive
+	scaler = $perspective / ($perspective + zr)
+	xp = xr * scaler + $centerX
+	yp = yr * scaler + $centerY
+	
+	` Set pixel color at projected coordinates on the screen
+	putPixel(trunc(xp), trunc(yp), #00ff00)
+}
+
