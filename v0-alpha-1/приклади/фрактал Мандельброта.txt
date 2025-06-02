@@ -1,3 +1,7 @@
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`  Фрактал Мандельброта
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 initGraph(640, 480)
 
 palette = array(80) of int
@@ -15,8 +19,7 @@ fragmentSize = floor(palette.length / (colors.length - 1))
 fragmentIndex = 0
 fragmentPos = 0
 for (p = 0, p < 80, p++) {
-	c = colorMix(colors[fragmentIndex], colors[fragmentIndex + 1], fragmentPos, fragmentSize)
-	palette[p] = c
+	palette[p] = colorMix(colors[fragmentIndex], colors[fragmentIndex + 1], fragmentPos, fragmentSize)
 	fragmentPos++
 	if (fragmentPos > fragmentSize) {
 		fragmentPos = 0
@@ -34,9 +37,7 @@ for (x = 0, x < 640, x++)
 for (y = 0, y < 480, y++) {
 	i = x1 + x * kx
 	j = y1 + y * ky
-	n = mandelbrot(i, j)
-	c = palette[n]
-	putPixel(x, y, c)
+	putPixel(x, y, palette[mandelbrot(i, j)])
 }
 
 function mandelbrot(x: float, y: float): int {
@@ -53,8 +54,7 @@ function mandelbrot(x: float, y: float): int {
 	return: n
 }
 
-for (i = 0, i < 2000, i++) {
+repeat {
 	repaintGraph()
 	delay(20)
 }
-closeGraph()

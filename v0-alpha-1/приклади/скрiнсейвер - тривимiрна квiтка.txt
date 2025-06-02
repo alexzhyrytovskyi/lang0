@@ -1,0 +1,63 @@
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`  3D Flower Screensaver
+`  Author: Alex Zhyrytovskyi    created: 2018    lastmod: 2025-03-28
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+perspective = 1000 ` Величина перспективи
+centerX = 400      ` Центр координат по осі X
+centerY = 300      ` Центр координат по осі Y
+cosA = 0           ` Наперед пораховані значення синуса та косинуса
+sinA = 0           ` Наперед пораховані значення синуса та косинуса
+cosB = 0           ` Наперед пораховані значення синуса та косинуса
+sinB = 0           ` Наперед пораховані значення синуса та косинуса
+radius = 200       ` Радіус квітки
+magic1 = 5         ` Магічні числа, які задають кількість пелюсток
+magic2 = 3         ` Магічні числа, які задають кількість пелюсток
+alpha = 0          ` Початковий кут alpha
+beta = 0           ` Початковий кут beta
+
+initGraph(800, 600) ` Ініціалізовуємо графіку
+repeat {
+	clearGraph()        ` Очищаемо екран
+	rotate(alpha, beta) ` Повертаємо вісь координат на вказані кути
+	
+	` Малюємо тривимірну квітку
+	angle = 0
+	while (angle < 2 * pi) {
+		x = radius * cos(magic1 * angle) * cos(magic2 * angle)
+		y = radius * sin(magic2 * angle) * cos(magic1 * angle)
+		z = radius * random() / 10
+		putPixel3D(x, y, z)
+		angle += 0.0005
+	}
+	
+	repaintGraph() ` Відображаємо картинку на екран
+	delay(20)      ` Чекаемо 20 мілісекунд
+	alpha += 0.01  ` Збільшуємо величину кута alpha на певний приріст
+	beta += 0.005  ` Збільшуємо величину кута beta на певний приріст
+}
+
+` Функція обертання осі координат на кути alpha та beta
+function rotate(alpha: float, beta: float) {
+	$sinA = sin(alpha)
+	$cosA = cos(alpha)
+	$sinB = sin(beta)
+	$cosB = cos(beta)
+}
+
+` Функція яка ставить точку у тривимірному просторі
+function putPixel3D(x: float, y: float, z: float) {
+	` 3-вимірний поворот осі координат
+	xr  = x * $cosA - y * $sinA
+	tmp = x * $sinA + y * $cosA
+	yr  = tmp * $cosB - z * $sinB
+	zr  = tmp * $sinB + z * $cosB
+
+	` Перспективна проекція
+	scaler = $perspective / ($perspective + zr)
+	xp = xr * scaler + $centerX
+	yp = yr * scaler + $centerY
+	
+	` Ставимо точку в спроектованих на екран координатах
+	putPixel(trunc(xp), trunc(yp), #00ff00)
+}
+

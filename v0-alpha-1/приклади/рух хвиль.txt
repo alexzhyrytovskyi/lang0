@@ -1,6 +1,10 @@
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`  Симуляція руху хвиль на воді
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 initGraph(200, 150)
 
-t = 0.0
+t = 0
 wave_x = array(3) of int
 wave_y = array(3) of int
 wave_w = array(3) of float
@@ -25,7 +29,7 @@ repeat {
 			dy = y - wave_y[i]
 			h += sin(wave_w[i] * t - wave_k[i] * sqrt(pow(dx) + pow(dy)))
 		}
-		v = keepByte(floor(h * 100.0 + 50.0))
+		v = keepByte(floor(h * 100 + 50))
 		c = colorMix(#000000, #00ffaa, v, 255)
 		putPixel(x, y, c)
 	}
@@ -34,7 +38,6 @@ repeat {
 	delay(20)
 	t += 0.01
 }
-closeGraph()
 
 function keepByte(value: int): int {
 	if (value < 0)
